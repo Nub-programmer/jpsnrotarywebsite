@@ -14,6 +14,7 @@ import {
   ShieldCheck,
   FileText
 } from 'lucide-react';
+import { InteractLogo } from '../components/ui/InteractLogo';
 
 export const Home: React.FC = () => {
   return (
@@ -21,6 +22,10 @@ export const Home: React.FC = () => {
       {/* Official Hero Section - Clean White & Official Header */}
       <section className="bg-slate-50 border-b border-slate-200 py-12 md:py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center space-y-4">
+          <div className="flex justify-center mb-2">
+            <InteractLogo size="xl" />
+          </div>
+
           <div className="inline-flex items-center gap-2 bg-blue-100 border border-blue-200 text-blue-900 text-xs font-semibold px-3.5 py-1 rounded-full uppercase tracking-wider">
             <Award className="w-3.5 h-3.5 text-blue-800" /> Official Student Club Hub
           </div>

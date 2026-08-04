@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { HeartHandshake, Shield, Mail, School, MapPin } from 'lucide-react';
+import { Shield, Mail, School, MapPin } from 'lucide-react';
+import { InteractLogo } from '../ui/InteractLogo';
 
 export const Footer: React.FC = () => {
   return (
@@ -10,9 +11,7 @@ export const Footer: React.FC = () => {
           {/* Brand Info */}
           <div className="md:col-span-2 space-y-3">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-md bg-blue-900 text-white flex items-center justify-center font-bold text-base border border-blue-700">
-                <HeartHandshake className="w-5 h-5 text-amber-400" />
-              </div>
+              <InteractLogo size="md" />
               <div>
                 <h3 className="text-base font-bold text-white tracking-tight">
                   Interact Club of Jagran Public School, Noida

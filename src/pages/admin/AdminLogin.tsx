@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Shield, Lock, Mail, ArrowLeft, AlertCircle } from 'lucide-react';
+import { Lock, Mail, ArrowLeft, AlertCircle } from 'lucide-react';
 import { supabase, getSupabaseCredentials } from '../../lib/supabase';
+import { InteractLogo } from '../../components/ui/InteractLogo';
 
 export const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -18,30 +19,72 @@ export const AdminLogin: React.FC = () => {
     setLoading(true);
 
     if (!isConfigured) {
-      setErrorMessage("Supabase is not configured. Please verify project credentials.");
+      setErrorMessage("Unable to connect to authentication service. Please check environment variables.");
       setLoading(false);
       return;
     }
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { data, error: authError } = await supabase.auth.signInWithPassword({
         email: email.trim(),
         password: password.trim(),
       });
 
-      if (error) {
-        throw error;
+      if (authError) {
+        if (import.meta.env.DEV) {
+          console.log('[DEBUG] Auth signIn error:', authError);
+        }
+        if (
+          authError.message?.toLowerCase().includes('fetch') ||
+          authError.message?.toLowerCase().includes('network') ||
+          authError.status === 0
+        ) {
+          setErrorMessage("Unable to connect to authentication service. Please check environment variables.");
+        } else {
+          setErrorMessage("Invalid login credentials.");
+        }
+        setLoading(false);
+        return;
       }
 
-      if (!data.user) {
-        throw new Error('Invalid login credentials.');
+      if (!data?.user) {
+        setErrorMessage("Invalid login credentials.");
+        setLoading(false);
+        return;
       }
 
-      localStorage.setItem('admin_logged_in', 'true');
-      navigate('/admin/dashboard');
+      if (import.meta.env.DEV) {
+        console.log('[DEBUG] Auth user ID after login:', data.user.id);
+      }
+
+      // Query profiles table for role and active status
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('auth_user_id', data.user.id)
+        .eq('role', 'teacher_super_admin')
+        .eq('is_active', true)
+        .single();
+
+      if (import.meta.env.DEV) {
+        console.log('[DEBUG] Profile query result:', profile);
+        console.log('[DEBUG] Profile query error:', profileError);
+      }
+
+      if (profileError || !profile) {
+        await supabase.auth.signOut();
+        setErrorMessage("Access denied. This account is not approved for admin access.");
+        setLoading(false);
+        return;
+      }
+
+      // Success! Profile check passed
+      navigate('/admin/dashboard', { replace: true });
     } catch (err: any) {
-      console.error("Login error:", err);
-      setErrorMessage('Invalid login credentials.');
+      if (import.meta.env.DEV) {
+        console.log('[DEBUG] Login exception:', err);
+      }
+      setErrorMessage("Unable to connect to authentication service. Please check environment variables.");
     } finally {
       setLoading(false);
     }
@@ -52,8 +95,8 @@ export const AdminLogin: React.FC = () => {
       <div className="max-w-md w-full bg-white rounded-2xl border border-slate-200 shadow-lg overflow-hidden space-y-6">
         {/* Header */}
         <div className="bg-slate-900 text-white p-6 text-center space-y-2 border-b border-slate-800">
-          <div className="w-12 h-12 bg-blue-800 text-white rounded-xl flex items-center justify-center mx-auto border border-amber-400">
-            <Shield className="w-6 h-6 text-amber-400" />
+          <div className="flex justify-center">
+            <InteractLogo size="lg" />
           </div>
           <h1 className="text-xl font-extrabold tracking-tight">Faculty & Admin Portal</h1>
           <p className="text-xs text-slate-400">
@@ -114,7 +157,7 @@ export const AdminLogin: React.FC = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-800 hover:bg-blue-900 text-white font-bold text-sm py-3 px-4 rounded-lg shadow-xs transition disabled:opacity-50"
+            className="w-full bg-blue-800 hover:bg-blue-900 text-white font-bold text-sm py-3 px-4 rounded-lg shadow-xs transition disabled:opacity-50 cursor-pointer"
           >
             {loading ? 'Authenticating Admin...' : 'Sign In'}
           </button>

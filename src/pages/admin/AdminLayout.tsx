@@ -13,30 +13,66 @@ import {
   ShieldCheck,
   Globe,
   Menu,
-  X
+  X,
+  Loader2
 } from 'lucide-react';
-import { supabase } from '../../lib/supabase';
+import { supabase, checkAdminAccess } from '../../lib/supabase';
+import { InteractLogo } from '../../components/ui/InteractLogo';
 
 export const AdminLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isCheckingAccess, setIsCheckingAccess] = useState(true);
+  const [accessGranted, setAccessGranted] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem('admin_logged_in') === 'true';
-    if (!isLoggedIn) {
-      navigate('/admin/login');
-    }
-  }, [navigate]);
+    let isMounted = true;
+
+    const verifyAdmin = async () => {
+      setIsCheckingAccess(true);
+      const result = await checkAdminAccess();
+
+      if (!isMounted) return;
+
+      if (result.hasAccess) {
+        setAccessGranted(true);
+        setIsCheckingAccess(false);
+      } else {
+        setAccessGranted(false);
+        setIsCheckingAccess(false);
+        if (result.user) {
+          await supabase.auth.signOut();
+        }
+        navigate('/admin/login', { replace: true });
+      }
+    };
+
+    verifyAdmin();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === 'SIGNED_OUT') {
+        setAccessGranted(false);
+        navigate('/admin/login', { replace: true });
+      }
+    });
+
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
+  }, [navigate, location.pathname]);
 
   const handleLogout = async () => {
     try {
       await supabase.auth.signOut();
     } catch (e) {
-      // ignore
+      if (import.meta.env.DEV) {
+        console.log('[DEBUG] Logout error:', e);
+      }
     }
     localStorage.removeItem('admin_logged_in');
-    navigate('/admin/login');
+    navigate('/admin/login', { replace: true });
   };
 
   const menuItems = [
@@ -52,6 +88,21 @@ export const AdminLayout: React.FC = () => {
 
   const isActive = (path: string) => location.pathname === path;
 
+  if (isCheckingAccess) {
+    return (
+      <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
+        <div className="flex items-center gap-3 bg-white px-6 py-4 rounded-xl border border-slate-200 shadow-sm text-slate-700 font-medium text-sm">
+          <Loader2 className="w-5 h-5 text-blue-800 animate-spin" />
+          <span>Checking admin access…</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (!accessGranted) {
+    return null;
+  }
+
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col font-sans">
       {/* Admin Top Header */}
@@ -65,9 +116,7 @@ export const AdminLayout: React.FC = () => {
               {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded bg-blue-800 flex items-center justify-center font-bold border border-amber-400">
-                <ShieldCheck className="w-4 h-4 text-amber-400" />
-              </div>
+              <InteractLogo size="sm" />
               <div>
                 <span className="font-bold text-sm tracking-tight block text-white leading-none">
                   Admin Portal &bull; JPS Noida
@@ -128,7 +177,7 @@ export const AdminLayout: React.FC = () => {
 
           <div className="p-4 border-t border-slate-200 bg-slate-50 text-center">
             <p className="text-[11px] font-bold text-slate-700">Interact Club of JPS Noida</p>
-            <p className="text-[10px] text-slate-400">Teacher Control Panel v1.0 MVP</p>
+            <p className="text-[10px] text-slate-400">Teacher Control Panel</p>
           </div>
         </aside>
 

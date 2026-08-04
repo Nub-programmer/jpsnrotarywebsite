@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, HeartHandshake, ChevronRight } from 'lucide-react';
+import { Menu, X, ChevronRight } from 'lucide-react';
+import { InteractLogo } from '../ui/InteractLogo';
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,9 +44,7 @@ export const Navbar: React.FC = () => {
         <div className="flex justify-between items-center h-16 sm:h-20">
           {/* Brand & Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-md bg-blue-900 text-white flex items-center justify-center font-bold text-lg shadow-xs border border-blue-700">
-              <HeartHandshake className="w-5 h-5 text-amber-400" />
-            </div>
+            <InteractLogo size="md" />
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-bold text-slate-900 text-base md:text-lg tracking-tight group-hover:text-blue-900 transition">
