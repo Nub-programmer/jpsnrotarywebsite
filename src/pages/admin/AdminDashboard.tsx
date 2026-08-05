@@ -10,7 +10,8 @@ import {
   Calendar,
   Sparkles,
   Plus,
-  AlertCircle
+  AlertCircle,
+  Users
 } from 'lucide-react';
 import { supabase, getSupabaseCredentials } from '../../lib/supabase';
 
@@ -20,6 +21,7 @@ export const AdminDashboard: React.FC = () => {
     albumsCount: 0,
     projectsCount: 0,
     eventsCount: 0,
+    volunteersCount: 0,
   });
 
   const [loading, setLoading] = useState(true);
@@ -43,12 +45,14 @@ export const AdminDashboard: React.FC = () => {
       const { count: albCount } = await supabase.from('gallery_albums').select('*', { count: 'exact', head: true });
       const { count: projCount } = await supabase.from('projects').select('*', { count: 'exact', head: true });
       const { count: evtCount } = await supabase.from('events').select('*', { count: 'exact', head: true });
+      const { count: volCount } = await supabase.from('volunteer_submissions').select('*', { count: 'exact', head: true });
 
       setStats({
         galleryImages: imgCount || 0,
         albumsCount: albCount || 0,
         projectsCount: projCount || 0,
         eventsCount: evtCount || 0,
+        volunteersCount: volCount || 0,
       });
     } catch (err) {
       console.warn("Error fetching dashboard stats:", err);
@@ -203,42 +207,51 @@ export const AdminDashboard: React.FC = () => {
       </div>
 
       {/* Metrics Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        <div className="bg-white p-5 rounded-lg border border-slate-200 space-y-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <Link to="/admin/projects" className="bg-white p-5 rounded-lg border border-slate-200 space-y-2 hover:border-blue-300 transition">
           <div className="flex justify-between items-center text-slate-500">
             <span className="text-xs font-bold uppercase tracking-wider">Service Projects</span>
             <FolderKanban className="w-5 h-5 text-blue-900" />
           </div>
           <div className="text-2xl font-bold text-slate-900">{stats.projectsCount}</div>
           <p className="text-xs text-slate-500">Active and completed club projects</p>
-        </div>
+        </Link>
 
-        <div className="bg-white p-5 rounded-lg border border-slate-200 space-y-2">
+        <Link to="/admin/events" className="bg-white p-5 rounded-lg border border-slate-200 space-y-2 hover:border-amber-300 transition">
           <div className="flex justify-between items-center text-slate-500">
             <span className="text-xs font-bold uppercase tracking-wider">Club Events</span>
             <Calendar className="w-5 h-5 text-amber-600" />
           </div>
           <div className="text-2xl font-bold text-slate-900">{stats.eventsCount}</div>
           <p className="text-xs text-slate-500">Scheduled events & assemblies</p>
-        </div>
+        </Link>
 
-        <div className="bg-white p-5 rounded-lg border border-slate-200 space-y-2">
+        <Link to="/admin/volunteers" className="bg-white p-5 rounded-lg border border-slate-200 space-y-2 hover:border-indigo-300 transition">
           <div className="flex justify-between items-center text-slate-500">
-            <span className="text-xs font-bold uppercase tracking-wider">Photo Gallery Images</span>
+            <span className="text-xs font-bold uppercase tracking-wider">Volunteers</span>
+            <Users className="w-5 h-5 text-indigo-700" />
+          </div>
+          <div className="text-2xl font-bold text-slate-900">{stats.volunteersCount}</div>
+          <p className="text-xs text-slate-500">Submitted student applications</p>
+        </Link>
+
+        <Link to="/admin/gallery" className="bg-white p-5 rounded-lg border border-slate-200 space-y-2 hover:border-emerald-300 transition">
+          <div className="flex justify-between items-center text-slate-500">
+            <span className="text-xs font-bold uppercase tracking-wider">Photo Images</span>
             <ImageIcon className="w-5 h-5 text-emerald-700" />
           </div>
           <div className="text-2xl font-bold text-slate-900">{stats.galleryImages}</div>
           <p className="text-xs text-slate-500">Uploaded project photos</p>
-        </div>
+        </Link>
 
-        <div className="bg-white p-5 rounded-lg border border-slate-200 space-y-2">
+        <Link to="/admin/gallery" className="bg-white p-5 rounded-lg border border-slate-200 space-y-2 hover:border-indigo-300 transition">
           <div className="flex justify-between items-center text-slate-500">
             <span className="text-xs font-bold uppercase tracking-wider">Gallery Albums</span>
             <Folder className="w-5 h-5 text-indigo-700" />
           </div>
           <div className="text-2xl font-bold text-slate-900">{stats.albumsCount}</div>
           <p className="text-xs text-slate-500">Categorized event albums</p>
-        </div>
+        </Link>
       </div>
 
       {/* Quick Action Links */}

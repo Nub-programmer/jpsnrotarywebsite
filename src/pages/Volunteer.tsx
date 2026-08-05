@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { HeartHandshake, CheckCircle2, Send, ShieldAlert, Sparkles } from 'lucide-react';
 import { supabase, getSupabaseCredentials } from '../lib/supabase';
+import { sendAdminNewVolunteerNotification } from '../lib/emailService';
 
 export const Volunteer: React.FC = () => {
   const [fullName, setFullName] = useState('');
@@ -37,33 +38,52 @@ export const Volunteer: React.FC = () => {
     setErrorMessage('');
     setIsSubmitting(true);
 
+    const formattedInterests = Array.isArray(interests) ? interests.join(', ') : (interests || '');
+
     const payload = {
       full_name: fullName.trim(),
       class_section: classSection.trim(),
       email: email.trim(),
       phone: phone.trim(),
-      interests,
+      interests: formattedInterests,
       reason_to_join: reasonToJoin.trim(),
       availability: availability.trim(),
       status: 'pending',
-      created_at: new Date().toISOString()
+      submitted_at: new Date().toISOString()
     };
 
     try {
       const { isConfigured } = getSupabaseCredentials();
-      if (isConfigured) {
-        const { error } = await supabase
-          .from('volunteer_submissions')
-          .insert([payload]);
-
-        if (error) throw error;
+      if (!isConfigured) {
+        throw new Error('Unable to connect to authentication service. Please check environment variables.');
       }
+
+      const { error } = await supabase
+        .from('volunteer_submissions')
+        .insert([payload]);
+
+      if (error) {
+        if (import.meta.env.DEV) {
+          console.error("Volunteer submission RLS or DB error:", error);
+        }
+        throw error;
+      }
+
+      // Notify admin atharvnegi26@gmail.com
+      sendAdminNewVolunteerNotification(payload).catch((e) => {
+        if (import.meta.env.DEV) {
+          console.warn('[DEV] Admin notification email dispatch error:', e);
+        }
+      });
 
       setIsSubmitted(true);
     } catch (err: any) {
-      console.error("Error submitting volunteer form:", err);
-      // Even if offline/unconfigured, show graceful success for user experience
-      setIsSubmitted(true);
+      if (import.meta.env.DEV) {
+        console.error("Error submitting volunteer form:", err);
+      }
+      setErrorMessage(
+        err?.message || 'Failed to submit application. Please check your network connection and try again.'
+      );
     } finally {
       setIsSubmitting(false);
     }

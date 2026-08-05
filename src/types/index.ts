@@ -100,11 +100,13 @@ export interface VolunteerSubmission {
   class_section: string;
   email: string;
   phone: string;
-  interests: string[];
+  interests: string | string[];
   reason_to_join: string;
   availability?: string;
   status: VolunteerStatus;
-  created_at: string;
+  submitted_at?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface Member {
