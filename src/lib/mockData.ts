@@ -61,7 +61,7 @@ export const initialClubSettings: ClubSettings = {
   secretary_name: "Student Leadership Team",
   current_session: "2025 - 2026",
   logo_url: "",
-  instagram_url: "",
+  instagram_url: "https://www.instagram.com/interactjps/",
   contact_email: "interact@jpsnoida.edu.in",
   total_projects: 0,
   active_members: 0,

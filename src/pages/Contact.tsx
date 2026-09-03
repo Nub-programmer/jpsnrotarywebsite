@@ -54,12 +54,12 @@ export const Contact: React.FC = () => {
               <div>
                 <span className="font-bold block text-slate-900 text-[11px] uppercase tracking-wider">Social Media</span>
                 <a
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/interactjps/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-900 font-semibold hover:underline"
                 >
-                  @interact_jpsnoida
+                  @interactjps
                 </a>
               </div>
             </li>
