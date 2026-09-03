@@ -1,5 +1,5 @@
 import React from 'react';
-import akshatImage from '../../assets/akshat.jpeg';
+import akshatImage from '../../assets/akshat.png';
 import apoorvImage from '../../assets/apoorv.jpeg';
 import avantikaImage from '../../assets/avantika.jpeg';
 import keertiImage from '../../assets/keerti.jpg';
