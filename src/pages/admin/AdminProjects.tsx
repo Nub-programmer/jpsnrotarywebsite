@@ -517,7 +517,7 @@ export const AdminProjects: React.FC = () => {
                   </label>
                 </div>
                 {coverImageUrl && (
-                  {coverImageUrl && <img src={coverImageUrl} alt="Preview" className="h-20 w-32 object-cover rounded border" onError={(event) => event.currentTarget.remove()} />}
+                  <img src={coverImageUrl} alt="Preview" className="h-20 w-32 object-cover rounded border" onError={(event) => event.currentTarget.remove()} />
                 )}
               </div>
 
