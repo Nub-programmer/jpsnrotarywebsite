@@ -8,6 +8,9 @@ import {
   VolunteerSubmission,
   Member
 } from '../types';
+import specialImage from '../../assets/special.jpg';
+import verdantImage from '../../assets/verdant.jpg';
+import verdantDetailImage from '../../assets/verdant1.jpg';
 
 export const initialClubSettings: ClubSettings = {
   club_name: "Interact Club of Jagran Public School, Noida",
@@ -28,17 +31,17 @@ export const initialClubSettings: ClubSettings = {
 export const sampleProjects: Project[] = [
   {
     id: "p-verdant",
-    title: "Verdant",
-    slug: "verdant",
+    title: "Project Verdant",
+    slug: "project-verdant",
     category: "Environment",
     status: "Completed",
-    date: "",
+    date: "11 July 2026",
     location: "Jagran Public School, Noida",
-    cover_image_url: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80",
-    short_description: "Verdant was a tree plantation drive project by the Interact Club of Jagran Public School, Noida, focused on promoting environmental responsibility and student participation in community service.",
-    full_report: "Verdant was a tree plantation drive project by the Interact Club of Jagran Public School, Noida, focused on promoting environmental responsibility and student participation in community service.",
-    objective: "To encourage students to take action for the environment through a tree plantation initiative.",
-    impact_summary: "Students participated in a meaningful environmental activity and helped promote awareness about sustainability and green spaces.",
+    cover_image_url: verdantImage,
+    short_description: "The Interact Club of Jagran Public School, Noida participated in Project Verdant, the flagship environmental initiative of Interact District 3012 for Rotary Year 2026–27, under the theme “Plant 10. Nurture 10.”",
+    full_report: "The Interact Club of Jagran Public School, Noida proudly participated in Project Verdant, the flagship environmental initiative of Interact District 3012 for Rotary Year 2026–27. Guided by the theme “Plant 10. Nurture 10.”, the club organized a plantation drive on the school campus to promote environmental awareness and encourage students to take responsibility for protecting nature.\n\nMembers enthusiastically planted saplings and pledged to nurture them through regular care, reinforcing the idea that true environmental impact comes not only from planting trees but from ensuring they continue to grow and thrive.\n\nThe plantation drive brought together students and teachers with a shared vision of creating a cleaner and greener environment. Through this activity, participants gained a deeper understanding of nature conservation, sustainable practices, and the importance of preserving biodiversity. The event also fostered teamwork, leadership, and civic responsibility among the Interactors.\n\nThe club has pledged to regularly monitor and care for the planted saplings, strengthening its commitment to protecting nature beyond a single event. The club extends heartfelt gratitude to Senior Coordinator Mrs. Sangeeta Bishnoi for her constant encouragement, guidance, and support throughout the project.",
+    objective: "To promote environmental awareness, encourage tree plantation, and inspire students to nurture saplings as a long-term responsibility.",
+    impact_summary: "Students and teachers came together to support sustainability, plant saplings, and promote eco-friendly habits within the school community.",
     volunteer_count: 0,
     volunteer_hours: 0,
     people_impacted: 0,
@@ -50,6 +53,19 @@ export const sampleProjects: Project[] = [
 
 export const sampleEvents: EventItem[] = [
   {
+    id: "evt-student-leadership",
+    title: "Inspiring Change Through Student Leadership",
+    date: "7 August 2026",
+    time: "",
+    venue: "Jagran Public School, Noida",
+    category: "Assembly / Awareness / Sustainability",
+    cover_image_url: specialImage,
+    status: "Completed",
+    description: "A student-led special assembly highlighting wellness, national pride, environmental action, and community health.",
+    full_description: "On 7 August 2026, Jagran Public School, Noida witnessed a series of impactful student-led initiatives promoting wellness, national pride, environmental action, and community health.\n\nStudents of Class XI organized a No-Tobacco awareness session and Nukkad Natak dedicated to the well-being of the school’s hardworking housekeeping and support staff. Students of Class V celebrated Independence Day with enthusiasm, paying tribute to freedom fighters through inspiring speeches and poems.\n\nThe Interact Club also launched a school-wide sustainability drive, encouraging students to adopt eco-friendly habits under the guidance of Senior Coordinator Mrs. Sangeeta Bishnoi.\n\nThe school Principal, Dr. D. K. Sinha, commended the young leaders and faculty mentors for organizing meaningful initiatives that strengthened school values and community bonds.",
+    created_at: new Date().toISOString()
+  },
+  {
     id: "evt-dila",
     title: "DILA",
     date: "To Be Announced",
@@ -57,16 +73,6 @@ export const sampleEvents: EventItem[] = [
     venue: "Amity University",
     status: "Upcoming",
     description: "DILA is an upcoming Interact leadership and training event where club members and office bearers will learn about leadership, service, and club responsibilities.",
-    created_at: new Date().toISOString()
-  },
-  {
-    id: "evt-outreach",
-    title: "Outreach Assembly",
-    date: "To Be Announced",
-    time: "",
-    venue: "Jagran Public School, Noida",
-    status: "Upcoming",
-    description: "An outreach assembly planned to introduce students to Interact Club activities, service goals, and upcoming opportunities for participation.",
     created_at: new Date().toISOString()
   }
 ];
@@ -109,12 +115,21 @@ export const sampleMembers: Member[] = [
 export const sampleGalleryAlbums: GalleryAlbum[] = [
   {
     id: "album-1",
-    title: "Tree Plantation Drive",
-    description: "Glimpses of students planting saplings in and around the campus.",
-    cover_image_url: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80",
+    title: "Project Verdant",
+    description: "Photos from Project Verdant, the tree plantation drive conducted by the Interact Club of Jagran Public School, Noida under the theme “Plant 10. Nurture 10.”",
+    cover_image_url: verdantImage,
     is_public: true,
     image_count: 2,
-    created_at: "2026-03-16T10:00:00Z"
+    created_at: "2026-07-11T10:00:00Z"
+  },
+  {
+    id: "album-student-leadership",
+    title: "Inspiring Change Through Student Leadership",
+    description: "A student-led special assembly and sustainability initiative promoting wellness, national pride, environmental action, and community health.",
+    cover_image_url: specialImage,
+    is_public: true,
+    image_count: 1,
+    created_at: "2026-08-07T10:00:00Z"
   }
 ];
 
@@ -122,15 +137,22 @@ export const sampleGalleryImages: GalleryImage[] = [
   {
     id: "img-1",
     album_id: "album-1",
-    image_url: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&q=80",
-    caption: "Interactors preparing soil for sapling planting",
+    image_url: verdantImage,
+    caption: "Group photo from Project Verdant plantation drive at Jagran Public School, Noida.",
     is_public: true
   },
   {
     id: "img-2",
     album_id: "album-1",
-    image_url: "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=1200&q=80",
-    caption: "Group photo with teacher-in-charge and student team",
+    image_url: verdantDetailImage,
+    caption: "Interact Club members planting saplings as part of Project Verdant.",
+    is_public: true
+  },
+  {
+    id: "img-student-leadership",
+    album_id: "album-student-leadership",
+    image_url: specialImage,
+    caption: "Student-led initiatives and sustainability drive at Jagran Public School, Noida.",
     is_public: true
   }
 ];

@@ -58,7 +58,10 @@ export interface EventItem {
   date: string;
   time?: string;
   venue?: string;
+  category?: string;
+  cover_image_url?: string;
   description: string;
+  full_description?: string;
   registration_link?: string;
   status: 'Upcoming' | 'Ongoing' | 'Completed' | 'Cancelled';
   linked_project_id?: string;
