@@ -1,6 +1,7 @@
 import React from 'react';
 import akshatImage from '../../assets/akshat.jpeg';
 import apoorvImage from '../../assets/apoorv.jpeg';
+import avantikaImage from '../../assets/avantika.jpeg';
 import mahiImage from '../../assets/mahi.jpeg';
 import manyaImage from '../../assets/manya.jpeg';
 import sanviImage from '../../assets/sanvi.jpeg';
@@ -21,7 +22,7 @@ const officeBearers: Member[] = [
   { name: 'Atharv S. Negi', position: 'Secretary', className: 'XI-A' },
   { name: 'Somya', position: 'Vice President', className: 'XI-E' },
   { name: 'Shivang Dubey', position: 'Sgt. At Arms', className: 'X-C', image: shivangImage },
-  { name: 'Avantika', position: 'Jt. Secretary', className: 'X-C' },
+  { name: 'Avantika', position: 'Jt. Secretary', className: 'X-C', image: avantikaImage },
   { name: 'Ansh Raj', position: 'Treasurer', className: 'XI-D' },
 ];
 
@@ -32,11 +33,11 @@ const directors: Member[] = [
   { name: 'Manya', position: 'Director of Posters', className: 'XI-E', image: manyaImage },
   { name: 'Keerti Negi', position: 'Director of Social Media', className: 'XI-E' },
   { name: 'Shrinidhi Jha', position: 'Director of Photography', className: 'XI-A', image: shrinidhiImage },
+  { name: 'Apoorv Sinha', position: 'Director of Communication', className: 'XI-D', image: apoorvImage },
 ];
 
 const members: Member[] = [
   { name: 'Shaurya Singh', position: 'Member (Social Media)', className: 'XI-B', image: shauryaImage },
-  { name: 'Apoorv Sinha', position: 'Member (Communication)', className: 'XI-D', image: apoorvImage },
   { name: 'Shreya', position: 'Member', className: 'X-C' },
   { name: 'Mahi', position: 'Member', className: 'XII-A', image: mahiImage },
   { name: 'Sanvi Kumari', position: 'Member', className: 'XI-E', image: sanviImage },
@@ -51,7 +52,7 @@ const MemberCard: React.FC<{ member: Member; prominent?: boolean }> = ({ member,
   <article className={`bg-white border border-slate-200 rounded-lg p-4 flex items-center gap-4 shadow-sm ${prominent ? 'md:p-5 md:gap-5' : ''}`}>
     <div className={`shrink-0 overflow-hidden rounded-full bg-blue-50 border-2 border-amber-400 flex items-center justify-center text-blue-900 font-bold ${prominent ? 'w-20 h-20 text-lg' : 'w-16 h-16 text-base'}`}>
       {member.image ? (
-        <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
+        <img src={member.image} alt={member.name} className="block w-full h-full object-cover object-center" />
       ) : (
         initials(member.name)
       )}
