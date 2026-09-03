@@ -15,6 +15,7 @@ import {
   FileText
 } from 'lucide-react';
 import { InteractLogo } from '../components/ui/InteractLogo';
+import { sampleEvents, sampleProjects } from '../lib/mockData';
 
 export const Home: React.FC = () => {
   return (
@@ -62,6 +63,38 @@ export const Home: React.FC = () => {
               <ImageIcon className="w-4 h-4 text-blue-800" /> View Gallery
             </Link>
           </div>
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-slate-200 pb-3">
+          <div>
+            <span className="text-xs font-bold text-amber-700 uppercase tracking-widest">Create Lasting Impact</span>
+            <h2 className="text-xl font-bold text-slate-900 mt-1">Recent Work</h2>
+          </div>
+          <span className="text-xs text-slate-500">Verified club activities</span>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {sampleProjects.slice(0, 1).map((project) => (
+            <Link key={project.id} to={`/projects/${project.slug}`} className="group bg-white border border-slate-200 rounded-lg overflow-hidden flex min-h-40">
+              <img src={project.cover_image_url} alt={project.title} className="w-36 sm:w-48 object-cover" />
+              <div className="p-4 space-y-2">
+                <span className="text-[11px] font-bold text-emerald-700 uppercase">{project.status}</span>
+                <h3 className="font-bold text-slate-900 group-hover:text-blue-900">{project.title}</h3>
+                <p className="text-xs text-slate-600 line-clamp-3">{project.short_description}</p>
+              </div>
+            </Link>
+          ))}
+          {sampleEvents.slice(0, 1).map((event) => (
+            <article key={event.id} className="bg-white border border-slate-200 rounded-lg overflow-hidden flex min-h-40">
+              <img src={event.cover_image_url} alt={event.title} className="w-36 sm:w-48 object-cover" />
+              <div className="p-4 space-y-2">
+                <span className="text-[11px] font-bold text-emerald-700 uppercase">{event.status}</span>
+                <h3 className="font-bold text-slate-900">{event.title}</h3>
+                <p className="text-xs text-slate-600 line-clamp-3">{event.description}</p>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 

@@ -12,6 +12,11 @@ import specialImage from '../../assets/special.jpg';
 import verdantImage from '../../assets/verdant.jpg';
 import verdantDetailImage from '../../assets/verdant1.jpg';
 
+export const mergeById = <T extends { id: string }>(localItems: T[], remoteItems: T[]) => {
+  const remoteById = new Map(remoteItems.map((item) => [item.id, item]));
+  return [...localItems.map((item) => remoteById.get(item.id) || item), ...remoteItems.filter((item) => !localItems.some((localItem) => localItem.id === item.id))];
+};
+
 export const initialClubSettings: ClubSettings = {
   club_name: "Interact Club of Jagran Public School, Noida",
   school_name: "Jagran Public School, Noida",

@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import { Search, Filter, Calendar, MapPin, FolderKanban, ArrowRight } from 'lucide-react';
 import { supabase, getSupabaseCredentials } from '../lib/supabase';
 import { Project } from '../types';
+import { mergeById, sampleProjects } from '../lib/mockData';
 
 export const Projects: React.FC = () => {
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<Project[]>(sampleProjects);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -27,14 +28,10 @@ export const Projects: React.FC = () => {
           .eq('approval_status', 'published')
           .order('created_at', { ascending: false });
 
-        if (data) {
-          setProjects(data);
-        } else {
-          setProjects([]);
-        }
+        setProjects(mergeById(sampleProjects, data || []));
       } catch (err) {
         console.warn("Error fetching projects from Supabase:", err);
-        setProjects([]);
+        setProjects(sampleProjects);
       } finally {
         setLoading(false);
       }
@@ -132,7 +129,7 @@ export const Projects: React.FC = () => {
               <div>
                 <div className="h-52 bg-slate-100 relative overflow-hidden">
                   <img
-                    src={project.cover_image_url || 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80'}
+                    src={project.cover_image_url}
                     alt={project.title}
                     className="w-full h-full object-cover"
                   />

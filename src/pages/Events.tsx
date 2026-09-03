@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Calendar, Clock, MapPin, Info } from 'lucide-react';
 import { supabase, getSupabaseCredentials } from '../lib/supabase';
 import { EventItem } from '../types';
+import { mergeById, sampleEvents } from '../lib/mockData';
 
 export const Events: React.FC = () => {
-  const [eventsList, setEventsList] = useState<EventItem[]>([]);
+  const [eventsList, setEventsList] = useState<EventItem[]>(sampleEvents);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -21,14 +22,10 @@ export const Events: React.FC = () => {
           .select('*')
           .order('created_at', { ascending: false });
 
-        if (data) {
-          setEventsList(data);
-        } else {
-          setEventsList([]);
-        }
+        setEventsList(mergeById(sampleEvents, data || []));
       } catch (err) {
         console.warn("Error fetching events from Supabase:", err);
-        setEventsList([]);
+        setEventsList(sampleEvents);
       } finally {
         setLoading(false);
       }
@@ -71,10 +68,16 @@ export const Events: React.FC = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {eventsList.map((evt) => (
-              <div
+              <article
                 key={evt.id}
-                className="bg-slate-50 rounded-lg border border-slate-200 p-6 space-y-3 flex flex-col justify-between"
+                className="bg-slate-50 rounded-lg border border-slate-200 overflow-hidden flex flex-col justify-between"
               >
+                {evt.cover_image_url && (
+                  <div className="h-48 bg-slate-100 overflow-hidden">
+                    <img src={evt.cover_image_url} alt={evt.title} className="block w-full h-full object-cover" />
+                  </div>
+                )}
+                <div className="p-6 space-y-3">
                 <div className="space-y-3">
                   <div className="flex justify-between items-start gap-2">
                     <span className="text-xs font-semibold text-blue-900 bg-blue-100 border border-blue-200 px-2.5 py-0.5 rounded">
@@ -88,6 +91,12 @@ export const Events: React.FC = () => {
                   <h3 className="text-base font-bold text-slate-900">{evt.title}</h3>
 
                   <p className="text-xs text-slate-600 leading-relaxed">{evt.description}</p>
+                  {evt.full_description && (
+                    <details className="pt-1">
+                      <summary className="cursor-pointer text-xs font-semibold text-blue-900">Read full update</summary>
+                      <p className="mt-3 text-xs text-slate-600 leading-relaxed whitespace-pre-line">{evt.full_description}</p>
+                    </details>
+                  )}
                 </div>
 
                 <div className="space-y-1 pt-3 border-t border-slate-200 text-xs text-slate-600">
@@ -102,7 +111,8 @@ export const Events: React.FC = () => {
                     <span>Venue: {evt.venue || 'Jagran Public School, Noida'}</span>
                   </div>
                 </div>
-              </div>
+                </div>
+              </article>
             ))}
           </div>
         )}

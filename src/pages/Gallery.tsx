@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Image as ImageIcon, Folder, Maximize2, Sparkles } from 'lucide-react';
 import { supabase, getSupabaseCredentials } from '../lib/supabase';
 import { GalleryAlbum, GalleryImage } from '../types';
-import { sampleGalleryAlbums, sampleGalleryImages } from '../lib/mockData';
+import { mergeById, sampleGalleryAlbums, sampleGalleryImages } from '../lib/mockData';
 import { Lightbox } from '../components/ui/Lightbox';
 
 export const Gallery: React.FC = () => {
@@ -36,8 +36,8 @@ export const Gallery: React.FC = () => {
           .eq('is_public', true)
           .order('created_at', { ascending: false });
 
-        if (albumsData && albumsData.length > 0) setAlbums(albumsData);
-        if (imagesData && imagesData.length > 0) setImages(imagesData);
+        setAlbums(mergeById(sampleGalleryAlbums, albumsData || []));
+        setImages(mergeById(sampleGalleryImages, imagesData || []));
       } catch (err) {
         console.warn("Using sample gallery fallback", err);
       } finally {
