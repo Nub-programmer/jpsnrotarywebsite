@@ -2,6 +2,7 @@ import React from 'react';
 import akshatImage from '../../assets/akshat.jpeg';
 import apoorvImage from '../../assets/apoorv.jpeg';
 import avantikaImage from '../../assets/avantika.jpeg';
+import keertiImage from '../../assets/keerti.jpg';
 import mahiImage from '../../assets/mahi.jpeg';
 import manyaImage from '../../assets/manya.jpeg';
 import sanviImage from '../../assets/sanvi.jpeg';
@@ -31,7 +32,7 @@ const directors: Member[] = [
   { name: 'Pratkysh', position: 'Director of Awareness', className: 'XI-D' },
   { name: 'Vaishnavi', position: 'Director of Idea & Content', className: 'XII-E', image: vaishnaviImage },
   { name: 'Manya', position: 'Director of Posters', className: 'XI-E', image: manyaImage },
-  { name: 'Keerti Negi', position: 'Director of Social Media', className: 'XI-E' },
+  { name: 'Keerti Negi', position: 'Director of Social Media', className: 'XI-E', image: keertiImage },
   { name: 'Shrinidhi Jha', position: 'Director of Photography', className: 'XI-A', image: shrinidhiImage },
   { name: 'Apoorv Sinha', position: 'Director of Communication', className: 'XI-D', image: apoorvImage },
 ];
