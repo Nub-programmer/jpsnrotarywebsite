@@ -119,7 +119,7 @@ export const AdminLayout: React.FC = () => {
               <InteractLogo size="sm" />
               <div>
                 <span className="font-bold text-sm tracking-tight block text-white leading-none">
-                  Admin Portal &bull; JPS Noida
+                  Admin Portal &bull; Jagran Public School, Noida
                 </span>
                 <span className="text-[10px] text-amber-400 font-medium">Teacher Super Admin Active</span>
               </div>
@@ -176,7 +176,7 @@ export const AdminLayout: React.FC = () => {
           </div>
 
           <div className="p-4 border-t border-slate-200 bg-slate-50 text-center">
-            <p className="text-[11px] font-bold text-slate-700">Interact Club of JPS Noida</p>
+                  <p className="text-[11px] font-bold text-slate-700">Interact Club of Jagran Public School, Noida</p>
             <p className="text-[10px] text-slate-400">Teacher Control Panel</p>
           </div>
         </aside>

@@ -74,7 +74,7 @@ export const Events: React.FC = () => {
               >
                 {evt.cover_image_url && (
                   <div className="h-48 bg-slate-100 overflow-hidden">
-                    <img src={evt.cover_image_url} alt={evt.title} className="block w-full h-full object-cover" />
+                    <img src={evt.cover_image_url} alt={evt.title} className="block w-full h-full object-cover" onError={(event) => event.currentTarget.parentElement?.remove()} />
                   </div>
                 )}
                 <div className="p-6 space-y-3">

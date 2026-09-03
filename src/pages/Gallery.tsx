@@ -120,6 +120,7 @@ export const Gallery: React.FC = () => {
                   src={img.image_url}
                   alt={img.caption || 'Gallery image'}
                   className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                  onError={(event) => event.currentTarget.closest('div.group')?.remove()}
                 />
                 <div className="absolute inset-0 bg-slate-900/30 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
                   <span className="p-2 bg-white/90 text-slate-900 rounded-full shadow-lg">

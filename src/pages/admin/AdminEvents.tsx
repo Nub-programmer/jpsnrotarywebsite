@@ -15,7 +15,7 @@ export const AdminEvents: React.FC = () => {
   const [title, setTitle] = useState('');
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const [time, setTime] = useState('10:00 AM - 01:00 PM');
-  const [venue, setVenue] = useState('Main School Auditorium, JPS Noida');
+  const [venue, setVenue] = useState('Main School Auditorium, Jagran Public School, Noida');
   const [description, setDescription] = useState('');
   const [registrationLink, setRegistrationLink] = useState('');
   const [status, setStatus] = useState<'Upcoming' | 'Ongoing' | 'Completed' | 'Cancelled'>('Upcoming');
@@ -46,7 +46,7 @@ export const AdminEvents: React.FC = () => {
     setTitle('');
     setDate(new Date().toISOString().split('T')[0]);
     setTime('10:00 AM - 01:00 PM');
-    setVenue('Main School Auditorium, JPS Noida');
+    setVenue('Main School Auditorium, Jagran Public School, Noida');
     setDescription('');
     setRegistrationLink('');
     setStatus('Upcoming');

@@ -77,8 +77,8 @@ export const AdminProjects: React.FC = () => {
     setCategory('Community Service');
     setStatus('Completed');
     setDate(new Date().toISOString().split('T')[0]);
-    setLocation('JPS Noida Campus');
-    setCoverImageUrl('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&q=80');
+    setLocation('Jagran Public School, Noida');
+    setCoverImageUrl('');
     setShortDescription('');
     setFullReport('');
     setObjective('');
@@ -332,11 +332,14 @@ export const AdminProjects: React.FC = () => {
                   <tr key={proj.id} className="hover:bg-slate-50/80 transition">
                     <td className="py-3 px-4 font-semibold text-slate-900 max-w-xs">
                       <div className="flex items-center gap-3">
-                        <img
-                          src={proj.cover_image_url || 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=100&q=80'}
-                          alt=""
-                          className="w-10 h-10 rounded object-cover border shrink-0"
-                        />
+                        {proj.cover_image_url && (
+                          <img
+                            src={proj.cover_image_url}
+                            alt=""
+                            className="w-10 h-10 rounded object-cover border shrink-0"
+                            onError={(event) => event.currentTarget.remove()}
+                          />
+                        )}
                         <div>
                           <span className="block truncate font-bold text-slate-900">{proj.title}</span>
                           <span className="text-[10px] text-slate-400 font-normal">{proj.slug}</span>
@@ -481,7 +484,7 @@ export const AdminProjects: React.FC = () => {
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. JPS Noida Campus"
+                    placeholder="e.g. Jagran Public School, Noida"
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
                     className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-800 focus:outline-none"
@@ -497,7 +500,7 @@ export const AdminProjects: React.FC = () => {
                 <div className="flex gap-2 mb-2">
                   <input
                     type="url"
-                    placeholder="https://images.unsplash.com/..."
+                    placeholder="Optional local or approved image path"
                     value={coverImageUrl}
                     onChange={(e) => setCoverImageUrl(e.target.value)}
                     className="flex-1 px-3 py-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-800 focus:outline-none"
@@ -514,7 +517,7 @@ export const AdminProjects: React.FC = () => {
                   </label>
                 </div>
                 {coverImageUrl && (
-                  <img src={coverImageUrl} alt="Preview" className="h-20 w-32 object-cover rounded border" />
+                  {coverImageUrl && <img src={coverImageUrl} alt="Preview" className="h-20 w-32 object-cover rounded border" onError={(event) => event.currentTarget.remove()} />}
                 )}
               </div>
 

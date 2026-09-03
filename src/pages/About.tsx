@@ -33,7 +33,7 @@ export const About: React.FC = () => {
           <div className="w-10 h-10 rounded bg-blue-100 text-blue-900 flex items-center justify-center">
             <HeartHandshake className="w-5 h-5 text-blue-900" />
           </div>
-          <h2 className="text-lg font-bold text-slate-900">About JPS Noida Chapter</h2>
+          <h2 className="text-lg font-bold text-slate-900">About Jagran Public School, Noida Chapter</h2>
           <p className="text-xs text-slate-600 leading-relaxed">
             The Interact Club of Jagran Public School, Noida operates under faculty guidance. Students from Grades 8 to 12 actively plan and execute projects benefiting our school campus, local community, and environmental conservation.
           </p>

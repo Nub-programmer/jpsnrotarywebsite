@@ -11,10 +11,46 @@ import {
 import specialImage from '../../assets/special.jpg';
 import verdantImage from '../../assets/verdant.jpg';
 import verdantDetailImage from '../../assets/verdant1.jpg';
+import dilaImage from '../../assets/dila.png';
+import donationDriveImage from '../../assets/donationdriveandumbrella.png';
+import saplingsImage from '../../assets/implantationof50.png';
+import outreachImage from '../../assets/outreachinitiative.png';
+import projectBinImage from '../../assets/projectbin.png';
+import projectBinDetailImage from '../../assets/projectbin2.png';
+import umbrellaDriveImage from '../../assets/umbrelladonationdrive.png';
 
 export const mergeById = <T extends { id: string }>(localItems: T[], remoteItems: T[]) => {
-  const remoteById = new Map(remoteItems.map((item) => [item.id, item]));
-  return [...localItems.map((item) => remoteById.get(item.id) || item), ...remoteItems.filter((item) => !localItems.some((localItem) => localItem.id === item.id))];
+  const normalize = (value: string) => value.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  const getKeys = (item: T) => {
+    const record = item as T & { slug?: string; title?: string };
+    const titleKey = record.title ? normalize(record.title) : '';
+    return [record.slug && normalize(record.slug), titleKey, titleKey.replace(/^project-/, '')].filter(Boolean);
+  };
+  const merged: T[] = [];
+
+  localItems.forEach((item) => merged.push(item));
+  remoteItems.forEach((item) => {
+    const keys = getKeys(item);
+    const matchIndex = merged.findIndex((existingItem) => {
+      const existingKeys = getKeys(existingItem);
+      return keys.some((key) => existingKeys.includes(key));
+    });
+    if (matchIndex === -1) {
+      merged.push(item);
+      return;
+    }
+
+    const existing = merged[matchIndex];
+    const existingRecord = existing as T & { slug?: string };
+    const remoteRecord = item as T & { slug?: string };
+    const remoteIsCanonicalVerdant = remoteRecord.slug?.toLowerCase() === 'project-verdant';
+    const existingIsCanonicalVerdant = existingRecord.slug?.toLowerCase() === 'project-verdant';
+    if (remoteIsCanonicalVerdant || !existingIsCanonicalVerdant) {
+      merged[matchIndex] = item;
+    }
+  });
+
+  return merged;
 };
 
 export const initialClubSettings: ClubSettings = {
@@ -24,7 +60,7 @@ export const initialClubSettings: ClubSettings = {
   president_name: "Coming Soon",
   secretary_name: "Student Leadership Team",
   current_session: "2025 - 2026",
-  logo_url: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=300&q=80",
+  logo_url: "",
   instagram_url: "",
   contact_email: "interact@jpsnoida.edu.in",
   total_projects: 0,
@@ -53,6 +89,95 @@ export const sampleProjects: Project[] = [
     approval_status: "published",
     published: true,
     created_at: new Date().toISOString()
+  },
+  {
+    id: "p-stationery-donation-drive",
+    title: "Stationery Donation Drive",
+    slug: "stationery-donation-drive",
+    category: "Community Support",
+    status: "Upcoming",
+    date: "18 August 2026",
+    location: "Sai Kripa NGO",
+    cover_image_url: donationDriveImage,
+    short_description: "A student-led stationery donation drive to support learning for children from underserved communities through Sai Kripa NGO.",
+    full_report: "The Stationery Donation Drive is a student-led initiative focused on collecting and donating stationery items that directly support children’s learning needs. The drive reflects the club’s commitment to education support, community outreach, and compassionate service. Students are scheduled to visit Sai Kripa NGO on 18 August 2026.",
+    volunteer_count: 0,
+    volunteer_hours: 0,
+    people_impacted: 0,
+    approval_status: "published",
+    published: true,
+    created_at: new Date().toISOString()
+  },
+  {
+    id: "p-international-environmental-collaboration",
+    title: "International Environmental Collaboration",
+    slug: "international-environmental-collaboration",
+    category: "Global Awareness",
+    status: "Ongoing",
+    date: "",
+    location: "Jagran Public School, Noida",
+    cover_image_url: outreachImage,
+    short_description: "A student-led outreach initiative promoting environmental awareness, sustainability, and global citizenship.",
+    full_report: "This collaboration reflects a student-led environmental outreach initiative focused on sustainability, awareness, and global citizenship. It encourages responsible action through education, visual campaigns, and active student participation while promoting teamwork, leadership, and a commitment to positive change.",
+    volunteer_count: 0,
+    volunteer_hours: 0,
+    people_impacted: 0,
+    approval_status: "published",
+    published: true,
+    created_at: new Date().toISOString()
+  },
+  {
+    id: "p-project-drop-plastic-bin",
+    title: "Project D.R.O.P. Plastic Bin",
+    slug: "project-drop-plastic-bin",
+    category: "Plastic Waste Management",
+    status: "Completed",
+    date: "",
+    location: "Jagran Public School, Noida",
+    cover_image_url: projectBinImage,
+    short_description: "Launch of Project D.R.O.P., a plastic waste collection initiative supported by IPCA and Kia India CSR.",
+    full_report: "Project D.R.O.P. stands for Develop Responsible Outlook for Plastic. It serves as a dedicated collection point for school plastic waste and promotes segregation, collection, recycling, and responsible reuse. The initiative reinforces the importance of sustainability and visible daily action toward circularity.",
+    volunteer_count: 0,
+    volunteer_hours: 0,
+    people_impacted: 0,
+    approval_status: "published",
+    published: true,
+    created_at: new Date().toISOString()
+  },
+  {
+    id: "p-website-launch",
+    title: "Interact Club Website Launch",
+    slug: "website-launch",
+    category: "Digital Leadership",
+    status: "Completed",
+    date: "",
+    location: "Jagran Public School, Noida",
+    short_description: "Launch of the Interact Club website to document projects, activities, gallery updates, and community engagement.",
+    full_report: "The Interact Club website was built and presented by Atharv, Class XI A, as a student-led digital initiative to document club projects, share updates, display event galleries, and maintain a professional online identity for the club community.",
+    volunteer_count: 0,
+    volunteer_hours: 0,
+    people_impacted: 0,
+    approval_status: "published",
+    published: true,
+    created_at: new Date().toISOString()
+  },
+  {
+    id: "p-umbrella-donation-drive",
+    title: "Umbrella Donation Drive",
+    slug: "umbrella-donation-drive",
+    category: "Community Care",
+    status: "Completed",
+    date: "",
+    location: "Jagran Public School, Noida",
+    cover_image_url: umbrellaDriveImage,
+    short_description: "A practical community service initiative to support underprivileged individuals during harsh weather conditions.",
+    full_report: "The Umbrella Donation Drive reflects Interact’s commitment to dignity, care, and practical service. It is designed to help underprivileged community members facing sun and rain while also encouraging empathy-driven student service.",
+    volunteer_count: 0,
+    volunteer_hours: 0,
+    people_impacted: 0,
+    approval_status: "published",
+    published: true,
+    created_at: new Date().toISOString()
   }
 ];
 
@@ -72,12 +197,15 @@ export const sampleEvents: EventItem[] = [
   },
   {
     id: "evt-dila",
-    title: "DILA",
-    date: "To Be Announced",
+    title: "DILA – District Interact Leadership Assembly",
+    date: "19 August 2026",
     time: "",
     venue: "Amity University",
-    status: "Upcoming",
-    description: "DILA is an upcoming Interact leadership and training event where club members and office bearers will learn about leadership, service, and club responsibilities.",
+    category: "Leadership / Interact / Student Development",
+    cover_image_url: dilaImage,
+    status: "Completed",
+    description: "An inspiring day at DILA, Amity University, filled with insightful speeches, impactful performances, and valuable lessons on environmental awareness and leadership.",
+    full_description: "The Interact Club of Jagran Public School, Noida participated in DILA – District Interact Leadership Assembly at Amity University. The event was an inspiring day filled with insightful speeches, impactful performances, and valuable lessons on leadership, service, and environmental awareness. It offered students a meaningful opportunity to learn, connect, and grow as young leaders under the Rotary Year 2026–27 theme, “Create Lasting Impact.”",
     created_at: new Date().toISOString()
   }
 ];
@@ -85,7 +213,7 @@ export const sampleEvents: EventItem[] = [
 export const sampleAnnouncements: Announcement[] = [
   {
     id: "ann-1",
-    title: "Welcome to the Digital Hub of Interact Club JPS Noida",
+    title: "Welcome to the Digital Hub of Interact Club of Jagran Public School, Noida",
     content: "This digital hub was created by the Club Secretary to centralize service records, volunteer registrations, and club notices for Jagran Public School, Noida.",
     status: "published",
     is_pinned: true,
@@ -124,7 +252,7 @@ export const sampleGalleryAlbums: GalleryAlbum[] = [
     description: "Photos from Project Verdant, the tree plantation drive conducted by the Interact Club of Jagran Public School, Noida under the theme “Plant 10. Nurture 10.”",
     cover_image_url: verdantImage,
     is_public: true,
-    image_count: 2,
+    image_count: 3,
     created_at: "2026-07-11T10:00:00Z"
   },
   {
@@ -135,6 +263,42 @@ export const sampleGalleryAlbums: GalleryAlbum[] = [
     is_public: true,
     image_count: 1,
     created_at: "2026-08-07T10:00:00Z"
+  },
+  {
+    id: "album-dila",
+    title: "DILA – District Interact Leadership Assembly",
+    description: "An inspiring day of leadership, service, environmental awareness, and student development at Amity University.",
+    cover_image_url: dilaImage,
+    is_public: true,
+    image_count: 1,
+    created_at: "2026-08-19T10:00:00Z"
+  },
+  {
+    id: "album-project-drop",
+    title: "Project D.R.O.P.",
+    description: "Plastic waste collection and responsible recycling through Project D.R.O.P.",
+    cover_image_url: projectBinImage,
+    is_public: true,
+    image_count: 2,
+    created_at: "2026-08-20T10:00:00Z"
+  },
+  {
+    id: "album-environmental-collaboration",
+    title: "International Environmental Collaboration",
+    description: "Student-led environmental outreach promoting sustainability and global citizenship.",
+    cover_image_url: outreachImage,
+    is_public: true,
+    image_count: 1,
+    created_at: "2026-08-21T10:00:00Z"
+  },
+  {
+    id: "album-donation-drives",
+    title: "Stationery / Umbrella Donation Drives",
+    description: "Community support and practical care through student-led donation drives.",
+    cover_image_url: donationDriveImage,
+    is_public: true,
+    image_count: 2,
+    created_at: "2026-08-22T10:00:00Z"
   }
 ];
 
@@ -158,6 +322,55 @@ export const sampleGalleryImages: GalleryImage[] = [
     album_id: "album-student-leadership",
     image_url: specialImage,
     caption: "Student-led initiatives and sustainability drive at Jagran Public School, Noida.",
+    is_public: true
+  },
+  {
+    id: "img-verdant-saplings",
+    album_id: "album-1",
+    image_url: saplingsImage,
+    caption: "Plantation activity under the 50 Saplings environmental initiative.",
+    is_public: true
+  },
+  {
+    id: "img-dila",
+    album_id: "album-dila",
+    image_url: dilaImage,
+    caption: "Interact Club students at DILA, Amity University.",
+    is_public: true
+  },
+  {
+    id: "img-project-drop-1",
+    album_id: "album-project-drop",
+    image_url: projectBinImage,
+    caption: "Project D.R.O.P. plastic waste collection initiative.",
+    is_public: true
+  },
+  {
+    id: "img-project-drop-2",
+    album_id: "album-project-drop",
+    image_url: projectBinDetailImage,
+    caption: "Responsible plastic collection through Project D.R.O.P.",
+    is_public: true
+  },
+  {
+    id: "img-environmental-collaboration",
+    album_id: "album-environmental-collaboration",
+    image_url: outreachImage,
+    caption: "International environmental collaboration and student outreach.",
+    is_public: true
+  },
+  {
+    id: "img-donation-drive",
+    album_id: "album-donation-drives",
+    image_url: donationDriveImage,
+    caption: "Student-led stationery donation drive.",
+    is_public: true
+  },
+  {
+    id: "img-umbrella-drive",
+    album_id: "album-donation-drives",
+    image_url: umbrellaDriveImage,
+    caption: "Umbrella Donation Drive supporting community care.",
     is_public: true
   }
 ];

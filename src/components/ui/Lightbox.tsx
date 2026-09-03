@@ -61,6 +61,7 @@ export const Lightbox: React.FC<LightboxProps> = ({
           src={currentImage?.image_url}
           alt={currentImage?.caption || 'Gallery Photo'}
           className="max-h-[75vh] max-w-full object-contain rounded-lg shadow-2xl"
+          onError={onClose}
         />
 
         {images.length > 1 && (

@@ -51,7 +51,7 @@ export const Navbar: React.FC = () => {
                   Interact Club
                 </span>
                 <span className="text-[10px] font-semibold tracking-wider uppercase bg-blue-50 text-blue-900 px-2 py-0.5 rounded border border-blue-200">
-                  JPS Noida
+                  Jagran Public School, Noida
                 </span>
               </div>
               <p className="text-xs text-slate-500 font-medium">

@@ -40,7 +40,7 @@ export const Projects: React.FC = () => {
     fetchProjects();
   }, []);
 
-  const categories = ['All', 'Community Service', 'Environment', 'Awareness Drives', 'Youth Leadership'];
+  const categories = ['All', 'Environment', 'Community Support', 'Global Awareness', 'Plastic Waste Management', 'Digital Leadership', 'Community Care'];
   const statuses = ['All', 'Completed', 'In Progress', 'Upcoming', 'Ongoing'];
 
   const filteredProjects = projects.filter((project) => {
@@ -132,6 +132,7 @@ export const Projects: React.FC = () => {
                     src={project.cover_image_url}
                     alt={project.title}
                     className="w-full h-full object-cover"
+                    onError={(event) => event.currentTarget.parentElement?.remove()}
                   />
                   <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
                     <span className="text-[11px] bg-blue-900 text-white font-semibold px-2.5 py-0.5 rounded shadow-2xs">

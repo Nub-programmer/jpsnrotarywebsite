@@ -100,7 +100,7 @@ export const AdminLogin: React.FC = () => {
           </div>
           <h1 className="text-xl font-extrabold tracking-tight">Faculty & Admin Portal</h1>
           <p className="text-xs text-slate-400">
-            Interact Club of JPS Noida &bull; Secure Access
+            Interact Club of Jagran Public School, Noida &bull; Secure Access
           </p>
         </div>
 

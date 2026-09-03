@@ -25,7 +25,7 @@ export const Contact: React.FC = () => {
               <School className="w-5 h-5 text-amber-400" />
             </div>
             <div>
-              <h2 className="font-bold text-slate-900 text-base">Interact Club of JPS Noida</h2>
+              <h2 className="font-bold text-slate-900 text-base">Interact Club of Jagran Public School, Noida</h2>
               <p className="text-xs text-slate-500 font-medium">Jagran Public School, Noida</p>
             </div>
           </div>

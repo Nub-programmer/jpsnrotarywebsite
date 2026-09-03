@@ -97,6 +97,7 @@ export const ProjectDetail: React.FC = () => {
               src={project.cover_image_url}
               alt={project.title}
               className="w-full h-full object-cover"
+              onError={(event) => event.currentTarget.parentElement?.remove()}
             />
             <div className="absolute top-4 left-4 flex gap-2">
               <span className="text-xs bg-blue-900 text-white font-semibold px-3 py-1 rounded shadow-xs">
@@ -208,7 +209,7 @@ export const ProjectDetail: React.FC = () => {
           {/* Report Footer */}
           <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
             <div>
-              <span>Official Document of Interact Club of JPS Noida</span>
+              <span>Official Document of Interact Club of Jagran Public School, Noida</span>
             </div>
             <Link
               to="/volunteer"

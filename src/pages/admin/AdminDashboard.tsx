@@ -73,23 +73,23 @@ export const AdminDashboard: React.FC = () => {
     }
 
     try {
-      // Starter Project: Verdant
+      // Starter Project: Project Verdant
       const starterProject = {
-        title: "Verdant",
-        slug: "verdant",
+        title: "Project Verdant",
+        slug: "project-verdant",
         category: "Environment",
         status: "Completed",
         location: "Jagran Public School, Noida",
-        short_description: "Verdant was a tree plantation drive project by the Interact Club of Jagran Public School, Noida, focused on promoting environmental responsibility and student participation in community service.",
-        full_report: "Verdant was a tree plantation drive project by the Interact Club of Jagran Public School, Noida, focused on promoting environmental responsibility and student participation in community service.",
-        objective: "To encourage students to take action for the environment through a tree plantation initiative.",
-        impact_summary: "Students participated in a meaningful environmental activity and helped promote awareness about sustainability and green spaces.",
+        short_description: "The Interact Club of Jagran Public School, Noida participated in Project Verdant, the flagship environmental initiative of Interact District 3012 for Rotary Year 2026–27, under the theme Plant 10. Nurture 10.",
+        full_report: "The Interact Club of Jagran Public School, Noida proudly participated in Project Verdant, the flagship environmental initiative of Interact District 3012 for Rotary Year 2026–27. Guided by the theme Plant 10. Nurture 10., the club organized a plantation drive on the school campus to promote environmental awareness and encourage students to take responsibility for protecting nature.",
+        objective: "To promote environmental awareness, encourage tree plantation, and inspire students to nurture saplings as a long-term responsibility.",
+        impact_summary: "Students and teachers came together to support sustainability, plant saplings, and promote eco-friendly habits within the school community.",
         volunteer_count: 0,
         volunteer_hours: 0,
         people_impacted: 0,
         approval_status: "published",
         published: true,
-        cover_image_url: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80"
+        cover_image_url: ""
       };
 
       const { error: projErr } = await supabase.from('projects').insert([starterProject]);
@@ -98,12 +98,12 @@ export const AdminDashboard: React.FC = () => {
       // Starter Events: DILA & Outreach Assembly
       const starterEvents = [
         {
-          title: "DILA",
-          status: "Upcoming",
+          title: "DILA – District Interact Leadership Assembly",
+          status: "Completed",
           venue: "Amity University",
-          date: null,
+          date: "19 August 2026",
           time: null,
-          description: "DILA is an upcoming Interact leadership and training event where club members and office bearers will learn about leadership, service, and club responsibilities."
+          description: "An inspiring day at DILA, Amity University, filled with insightful speeches, impactful performances, and valuable lessons on environmental awareness and leadership."
         },
         {
           title: "Outreach Assembly",

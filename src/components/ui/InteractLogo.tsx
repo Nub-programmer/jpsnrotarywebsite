@@ -37,7 +37,7 @@ export const InteractLogo: React.FC<InteractLogoProps> = ({
             Interact Club
           </div>
           <div className="text-[10px] font-semibold text-blue-900 uppercase tracking-wider">
-            JPS Noida
+            Jagran Public School, Noida
           </div>
         </div>
       )}

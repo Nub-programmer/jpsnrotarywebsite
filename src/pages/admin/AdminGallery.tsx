@@ -54,7 +54,7 @@ export const AdminGallery: React.FC = () => {
       title: albumTitle.trim(),
       description: albumDesc.trim(),
       is_public: albumPublic,
-      cover_image_url: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80',
+      cover_image_url: '',
       created_at: new Date().toISOString()
     };
 
@@ -206,7 +206,7 @@ export const AdminGallery: React.FC = () => {
         {displayedImages.map((img) => (
           <div key={img.id} className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-2xs group relative">
             <div className="aspect-square bg-slate-100 relative overflow-hidden">
-              <img src={img.image_url} alt="" className="w-full h-full object-cover" />
+              <img src={img.image_url} alt="" className="w-full h-full object-cover" onError={(event) => event.currentTarget.parentElement?.parentElement?.remove()} />
               <button
                 onClick={() => setDeleteTargetId(img.id)}
                 className="absolute top-2 right-2 p-1.5 bg-red-600 text-white rounded-md shadow-xs opacity-0 group-hover:opacity-100 transition"

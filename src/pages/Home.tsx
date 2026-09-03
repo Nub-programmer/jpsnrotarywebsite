@@ -75,9 +75,9 @@ export const Home: React.FC = () => {
           <span className="text-xs text-slate-500">Verified club activities</span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {sampleProjects.slice(0, 1).map((project) => (
+          {sampleProjects.filter((project) => ['project-verdant', 'project-drop-plastic-bin', 'website-launch'].includes(project.slug)).map((project) => (
             <Link key={project.id} to={`/projects/${project.slug}`} className="group bg-white border border-slate-200 rounded-lg overflow-hidden flex min-h-40">
-              <img src={project.cover_image_url} alt={project.title} className="w-36 sm:w-48 object-cover" />
+              {project.cover_image_url && <img src={project.cover_image_url} alt={project.title} className="w-36 sm:w-48 object-cover" onError={(event) => event.currentTarget.remove()} />}
               <div className="p-4 space-y-2">
                 <span className="text-[11px] font-bold text-emerald-700 uppercase">{project.status}</span>
                 <h3 className="font-bold text-slate-900 group-hover:text-blue-900">{project.title}</h3>
@@ -85,9 +85,9 @@ export const Home: React.FC = () => {
               </div>
             </Link>
           ))}
-          {sampleEvents.slice(0, 1).map((event) => (
+          {sampleEvents.filter((event) => ['evt-dila', 'evt-student-leadership'].includes(event.id)).map((event) => (
             <article key={event.id} className="bg-white border border-slate-200 rounded-lg overflow-hidden flex min-h-40">
-              <img src={event.cover_image_url} alt={event.title} className="w-36 sm:w-48 object-cover" />
+              {event.cover_image_url && <img src={event.cover_image_url} alt={event.title} className="w-36 sm:w-48 object-cover" onError={(event) => event.currentTarget.remove()} />}
               <div className="p-4 space-y-2">
                 <span className="text-[11px] font-bold text-emerald-700 uppercase">{event.status}</span>
                 <h3 className="font-bold text-slate-900">{event.title}</h3>
@@ -205,7 +205,7 @@ export const Home: React.FC = () => {
       {/* Call to Action for Students */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 md:p-8 text-center space-y-4">
-          <h2 className="text-xl font-bold text-slate-900">Get Involved with Interact JPS Noida</h2>
+          <h2 className="text-xl font-bold text-slate-900">Get Involved with Interact Club of Jagran Public School, Noida</h2>
           <p className="text-xs md:text-sm text-slate-600 max-w-xl mx-auto leading-relaxed">
             Students from Grades 8 to 12 are invited to express interest in joining our service projects, volunteering for events, and building leadership skills.
           </p>
